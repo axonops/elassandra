@@ -937,11 +937,6 @@ public class IndexShard extends AbstractIndexShardComponent implements IndicesCl
         return getEngine().get(get, this::acquireSearcher);
     }
 
-    public Engine.GetResult get(String type, String id) throws IOException {
-        readAllowed();
-        return clusterService.getQueryManager().fetchSourceInternal(this, type, id, this.mapperService.documentMapper(type).getColumnDefinitions(), (timeElapsed) -> refreshMetric.inc(timeElapsed));
-    }
-
     /**
      * Writes all indexing changes to disk and opens a new searcher reflecting all changes.  This can throw {@link AlreadyClosedException}.
      */
